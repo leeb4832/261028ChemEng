@@ -25,7 +25,7 @@ function PostList() {
         <EmptyState message="아직 글이 없습니다. 첫 글을 남겨 보세요." />
       ) : (
         <>
-          <ul className="divide-y divide-slate-200 rounded-lg border border-slate-200">
+          <ul className="divide-y divide-slate-100 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
             {shown.map((p) => (
               <li key={p.id}>
                 <Link to={`/discussions/${p.id}`} className="block px-4 py-3 hover:bg-navy-50">

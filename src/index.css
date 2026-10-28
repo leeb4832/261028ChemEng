@@ -8,10 +8,21 @@
   --color-navy-700: #1f3a73;
   --color-navy-800: #162b57;
   --color-navy-900: #0f1f40;
-  --font-sans: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --color-accent: #b08d57;
+  --font-sans: "Pretendard Variable", "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
 }
 
 body {
-  @apply bg-white text-slate-800 antialiased;
-  line-height: 1.7;
+  @apply bg-slate-50 text-slate-800 antialiased;
+  line-height: 1.75;
+  letter-spacing: -0.01em;
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-navy-600);
+  outline-offset: 2px;
 }

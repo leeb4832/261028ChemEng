@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 
 export function EmptyState({ message, action }: { message: string; action?: ReactNode }) {
   return (
-    <div className="rounded-lg border border-dashed border-slate-300 px-6 py-10 text-center text-slate-500">
+    <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-10 text-center text-slate-500">
       <p>{message}</p>
       {action && <div className="mt-4">{action}</div>}
     </div>

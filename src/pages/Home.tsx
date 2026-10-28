@@ -55,24 +55,25 @@ function RecentPosts() {
 export default function Home() {
   return (
     <>
-      <section className="mb-12 rounded-lg bg-navy-50 px-6 py-10">
-        <p className="text-sm font-medium text-navy-600">{siteInfo.university}</p>
-        <h1 className="mt-1 text-3xl font-bold text-navy-900 sm:text-4xl">{siteInfo.labName}</h1>
-        <p className="mt-4 max-w-2xl text-slate-700">{siteInfo.intro}</p>
+      <section className="mb-12 overflow-hidden rounded-3xl bg-gradient-to-br from-navy-900 via-navy-800 to-navy-600 px-8 py-16 text-white shadow-lg sm:px-12">
+        <span className="mb-4 block h-1 w-12 rounded bg-accent" />
+        <p className="text-sm font-medium tracking-wide text-navy-200">{siteInfo.university}</p>
+        <h1 className="mt-2 text-4xl font-bold sm:text-5xl">{siteInfo.labName}</h1>
+        <p className="mt-6 max-w-2xl text-lg text-navy-100">{siteInfo.intro}</p>
       </section>
 
       <section className="mb-12 grid grid-cols-2 gap-4 md:grid-cols-4">
         {shortcuts.map((s) => (
-          <Link key={s.to} to={s.to} className="rounded-lg border border-slate-200 p-4 transition hover:border-navy-600 hover:shadow">
-            <p className="font-semibold text-navy-800">{s.title}</p>
+          <Link key={s.to} to={s.to} className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-navy-200 hover:shadow-md">
+            <p className="font-semibold text-navy-900">{s.title} <span className="text-accent transition group-hover:translate-x-1 inline-block">→</span></p>
             <p className="text-sm text-slate-600">{s.desc}</p>
           </Link>
         ))}
       </section>
 
       <div className="grid gap-8 md:grid-cols-2">
-        <Card><h2 className="mb-4 text-lg font-semibold text-navy-800">최근 연구</h2><RecentResearch /></Card>
-        <Card><h2 className="mb-4 text-lg font-semibold text-navy-800">최근 토론</h2><RecentPosts /></Card>
+        <Card><h2 className="mb-4 text-lg font-bold text-navy-900">최근 연구</h2><RecentResearch /></Card>
+        <Card><h2 className="mb-4 text-lg font-bold text-navy-900">최근 토론</h2><RecentPosts /></Card>
       </div>
     </>
   )

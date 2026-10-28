@@ -9,7 +9,7 @@ export default function Layout() {
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-10">
         <Outlet />
       </main>
-      <footer className="border-t border-slate-200 py-6 text-center text-sm text-slate-500">
+      <footer className="bg-navy-900 py-8 text-center text-sm text-navy-200">
         {siteInfo.university} {siteInfo.labName}
       </footer>
     </div>

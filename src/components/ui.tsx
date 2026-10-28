@@ -3,21 +3,22 @@ import { Link, type LinkProps } from 'react-router-dom'
 
 export function PageTitle({ title, desc }: { title: string; desc?: string }) {
   return (
-    <div className="mb-8 border-b border-slate-200 pb-4">
-      <h1 className="text-2xl font-bold text-navy-900 sm:text-3xl">{title}</h1>
-      {desc && <p className="mt-1 text-slate-600">{desc}</p>}
+    <div className="mb-10">
+      <span className="mb-3 block h-1 w-10 rounded bg-accent" />
+      <h1 className="text-3xl font-bold text-navy-900 sm:text-4xl">{title}</h1>
+      {desc && <p className="mt-2 text-lg text-slate-600">{desc}</p>}
     </div>
   )
 }
 
 export function Card({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return <div className={`rounded-lg border border-slate-200 bg-white p-5 shadow-sm ${className}`}>{children}</div>
+  return <div className={`rounded-2xl border border-slate-200 bg-white p-6 shadow-sm ${className}`}>{children}</div>
 }
 
-const base = 'inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition disabled:opacity-50'
+const base = 'inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition disabled:opacity-50'
 const styles = {
-  primary: `${base} bg-navy-700 text-white hover:bg-navy-800`,
-  outline: `${base} border border-slate-300 text-slate-700 hover:bg-slate-50`,
+  primary: `${base} bg-navy-700 text-white shadow-sm hover:bg-navy-800`,
+  outline: `${base} border border-slate-300 bg-white text-slate-700 hover:bg-slate-50`,
   danger: `${base} border border-red-300 text-red-700 hover:bg-red-50`,
 }
 
@@ -34,7 +35,7 @@ export function SearchBox({ value, onChange }: { value: string; onChange: (v: st
     <input
       type="search" value={value} onChange={(e) => onChange(e.target.value)}
       placeholder="키워드로 검색"
-      className="mb-6 w-full rounded-md border border-slate-300 px-3 py-2 sm:max-w-sm"
+      className="mb-6 w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 shadow-sm focus:border-navy-600 focus:outline-none sm:max-w-sm"
     />
   )
 }

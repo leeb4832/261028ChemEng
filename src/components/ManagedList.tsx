@@ -54,9 +54,9 @@ export default function ManagedList<T extends Entity>(p: Props<T>) {
   }
 
   return (
-    <section className="mb-12">
+    <section className="mb-14">
       <div className="mb-4 flex items-center justify-between">
-        {p.heading ? <h2 className="text-xl font-semibold text-navy-800">{p.heading}</h2> : <span />}
+        {p.heading ? <h2 className="text-xl font-bold text-navy-900">{p.heading}</h2> : <span />}
         {isAdmin && !editing && <Button onClick={() => setEditing('new')}>+ {p.addLabel}</Button>}
       </div>
 
@@ -78,7 +78,7 @@ export default function ManagedList<T extends Entity>(p: Props<T>) {
         ) : (
           <ul className={p.grid ? 'grid gap-4 sm:grid-cols-2' : 'space-y-3'}>
             {items.map((item) => (
-              <li key={item.id} className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+              <li key={item.id} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-navy-200 hover:shadow-md">
                 {p.renderItem(item)}
                 {isAdmin && (
                   <div className="mt-3 flex gap-2 border-t border-slate-100 pt-3">
