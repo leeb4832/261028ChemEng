@@ -1,0 +1,65 @@
+rules_version = '2';
+
+// Phase 2 대비 초안입니다. 아직 Firebase에 적용하지 않았습니다.
+// 첫 관리자(교수)는 Firebase 콘솔에서 users/{본인 uid} 문서의 role을 "admin"으로 직접 바꿔 만듭니다.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ----- 도우미 함수: users/{uid} 문서의 role 필드로 역할 확인 -----
+    function signedIn() {
+      return request.auth != null;
+    }
+    function role() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+    function hasUserDoc() {
+      return signedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+    function isAdmin() {
+      return hasUserDoc() && role() == 'admin';
+    }
+    function isMember() {
+      return hasUserDoc() && (role() == 'member' || role() == 'admin');
+    }
+    function isAuthor() {
+      return signedIn() && resource.data.authorId == request.auth.uid;
+    }
+
+    // ----- 사용자 -----
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      // 가입은 본인이, 반드시 pending으로만
+      allow create: if signedIn() && request.auth.uid == uid
+                    && request.resource.data.role == 'pending';
+      // 본인은 role을 바꿀 수 없음. admin은 모두 수정 가능(승인 처리)
+      allow update: if isAdmin()
+                    || (signedIn() && request.auth.uid == uid
+                        && request.resource.data.role == resource.data.role);
+      allow delete: if isAdmin();
+    }
+
+    // ----- 연구 / 수업 / 구성원: 누구나 읽기, 쓰기는 admin만 -----
+    match /research/{id}     { allow read: if true; allow write: if isAdmin(); }
+    match /publications/{id} { allow read: if true; allow write: if isAdmin(); }
+    match /courses/{id}      { allow read: if true; allow write: if isAdmin(); }
+    match /materials/{id}    { allow read: if true; allow write: if isAdmin(); }
+    match /members/{id}      { allow read: if true; allow write: if isAdmin(); }
+
+    // ----- 토론 -----
+    match /posts/{id} {
+      allow read: if isMember();
+      allow create: if isMember() && request.resource.data.authorId == request.auth.uid;
+      // 작성자/admin 수정. 단, 댓글 작성 시 댓글 수(commentCount)만 바꾸는 것은 member 누구나 가능
+      allow update: if isAuthor() || isAdmin()
+                    || (isMember()
+                        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['commentCount']));
+      allow delete: if isAuthor() || isAdmin();
+    }
+
+    match /comments/{id} {
+      allow read: if isMember();
+      allow create: if isMember() && request.resource.data.authorId == request.auth.uid;
+      allow update, delete: if isAuthor() || isAdmin();
+    }
+  }
+}
