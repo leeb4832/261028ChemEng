@@ -1,6 +1,6 @@
 rules_version = '2';
 
-// Phase 2 대비 초안입니다. 아직 Firebase에 적용하지 않았습니다.
+// Firebase 콘솔 → Firestore Database → 규칙 탭에 이 내용을 붙여넣고 "게시"하세요.
 // 첫 관리자(교수)는 Firebase 콘솔에서 users/{본인 uid} 문서의 role을 "admin"으로 직접 바꿔 만듭니다.
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -50,7 +50,8 @@ service cloud.firestore {
       allow read: if isMember();
       allow create: if isMember() && request.resource.data.authorId == request.auth.uid;
       // 작성자/admin 수정. 단, 댓글 작성 시 댓글 수(commentCount)만 바꾸는 것은 member 누구나 가능
-      allow update: if isAuthor() || isAdmin()
+      allow update: if (isAuthor() && request.resource.data.authorId == resource.data.authorId)
+                    || isAdmin()
                     || (isMember()
                         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['commentCount']));
       allow delete: if isAuthor() || isAdmin();
@@ -59,7 +60,8 @@ service cloud.firestore {
     match /comments/{id} {
       allow read: if isMember();
       allow create: if isMember() && request.resource.data.authorId == request.auth.uid;
-      allow update, delete: if isAuthor() || isAdmin();
+      allow update: if (isAuthor() && request.resource.data.authorId == resource.data.authorId) || isAdmin();
+      allow delete: if isAuthor() || isAdmin();
     }
   }
 }
