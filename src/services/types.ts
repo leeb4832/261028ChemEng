@@ -1,7 +1,7 @@
 // 화면이 사용하는 "데이터 창구"의 약속(인터페이스).
 // 화면은 이 약속만 알고, 실제 저장소(가짜/Firebase)는 services/index.ts에서 고른다.
 import type {
-  Comment, Course, Material, Member, Post, Publication, ResearchArea, Role, User,
+  Comment, Course, Material, Member, Post, Publication, ResearchArea, Role, User, UserProfile,
 } from '../types'
 
 export interface Entity {
@@ -36,6 +36,7 @@ export interface DataService {
   posts: Collection<Post>
   comments: Collection<Comment>
   members: Collection<Member>
+  users: Collection<UserProfile>
 }
 
 export interface AuthService {

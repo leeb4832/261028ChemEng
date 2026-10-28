@@ -27,7 +27,9 @@ export default function Header() {
         </button>
         <div className={`${open ? 'block' : 'hidden'} absolute left-0 right-0 top-full z-10 border-b border-slate-200 bg-white px-4 pb-4 md:static md:border-0 md:bg-transparent md:flex md:items-center md:gap-6 md:p-0`}>
           <nav className="md:flex md:gap-1" onClick={() => setOpen(false)}>
-            {menus.map((m) => <NavLink key={m.to} to={m.to} className={linkClass}>{m.label}</NavLink>)}
+            {(user?.role === 'admin' ? [...menus, { to: '/admin/users', label: '회원 관리' }] : menus).map((m) => (
+              <NavLink key={m.to} to={m.to} className={linkClass}>{m.label}</NavLink>
+            ))}
           </nav>
           <div className="mt-2 border-t border-slate-200 pt-2 text-sm text-slate-700 md:mt-0 md:border-0 md:pt-0" onClick={() => setOpen(false)}>
             {user ? (

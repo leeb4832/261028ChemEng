@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import Members from './pages/Members'
 import NotFound from './pages/NotFound'
 import Research from './pages/Research'
+import AdminUsers from './pages/AdminUsers'
 import Teaching from './pages/Teaching'
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/discussions/new" element={<DiscussionNew />} />
         <Route path="/discussions/:id" element={<DiscussionDetail />} />
         <Route path="/members" element={<Members />} />
+        <Route path="/admin/users" element={<AdminUsers />} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Route>

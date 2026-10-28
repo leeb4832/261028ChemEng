@@ -9,6 +9,14 @@ export interface User {
   role: Role
 }
 
+// 회원 목록(관리자 승인 화면)용. Firestore의 users/{uid} 문서
+export interface UserProfile {
+  id: string // = uid
+  name: string
+  email: string
+  role: Role
+}
+
 export interface ResearchArea {
   id: string
   title: string

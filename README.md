@@ -1,8 +1,7 @@
-# 화학공학 연구실 웹사이트 (Phase 1)
+# 화학공학 연구실 웹사이트
 
 연구·수업 자료와 대학원생 토론 게시판이 있는 웹사이트입니다.
-**지금 단계(Phase 1)는 가짜 데이터와 가짜 로그인**으로 동작합니다. 새로고침하면 입력한 내용은 처음 상태로 돌아갑니다.
-(다음 단계에서 Firebase를 연결하면 실제로 저장됩니다.)
+Firebase 설정(`.env`)이 있으면 **실제 Google 로그인과 Firestore 저장**을 쓰고, 없으면 **가짜 데이터(데모)** 로 동작합니다. 데모에서는 새로고침하면 입력한 내용이 처음 상태로 돌아갑니다.
 
 ## 1. 내 컴퓨터에서 실행해 보기
 
@@ -42,19 +41,28 @@ npm run dev
 4. 1~2분 뒤 `https://○○○.netlify.app` 주소가 생깁니다. 이 주소가 사이트 주소입니다.
 5. 이후 GitHub에 변경 내용을 올릴 때마다 자동으로 다시 배포됩니다.
 
-## 4. 내용 바꾸기
+## 4. Firebase 연결하기
+
+1. Firebase 콘솔 → **Firestore Database → 데이터베이스 만들기** (프로덕션 모드로 시작).
+2. **Firestore → 규칙** 탭에 이 폴더의 `firestore.rules` 내용을 붙여넣고 **게시**합니다. (이 규칙이 보안의 핵심이니 꼭 하세요.)
+3. 내 컴퓨터: `.env.example`을 복사해 `.env`로 만들고 값을 채웁니다. (Firebase 콘솔 → 프로젝트 설정 → 내 앱의 설정값)
+4. Netlify: **Site configuration → Environment variables**에 `.env`와 같은 6개 이름/값을 넣고 다시 배포합니다.
+5. Firebase 콘솔 → **Authentication → 설정 → 승인된 도메인**에 Netlify 주소(`○○○.netlify.app`)를 추가합니다.
+6. **첫 교수(관리자) 만들기**: 사이트에서 Google로 한 번 로그인 → Firebase 콘솔 → Firestore → `users` 컬렉션 → 내 문서의 `role` 값을 `admin`으로 바꿉니다. 새로고침(또는 재로그인)하면 상단에 **회원 관리** 메뉴가 생기고, 여기서 다른 사람을 승인할 수 있습니다.
+
+## 5. 내용 바꾸기
 
 - 연구실 이름·소개 문구: `src/siteInfo.ts`
 - 초기 샘플 데이터: `src/services/mock/seed.ts`
 - 연구·수업·구성원 내용은 교수(admin)로 로그인해서 화면에서 직접 수정할 수 있습니다. (Phase 1에서는 새로고침하면 사라집니다.)
 
-## 5. 폴더 구조 (참고)
+## 6. 폴더 구조 (참고)
 
 ```
 src/
   components/  공용 화면 조각 (헤더, 카드, 폼 …)
   pages/       주소별 화면
-  services/    데이터 창구 (types.ts = 약속, mock/ = 가짜 구현, index.ts = 선택)
+  services/    데이터 창구 (types.ts = 약속, mock/ = 가짜 구현, firebase/ = Firebase 구현, index.ts = 선택)
   context/     로그인 상태
   types/       데이터 모양 정의
 firestore.rules   Firebase 보안 규칙 초안 (아직 적용 안 함)

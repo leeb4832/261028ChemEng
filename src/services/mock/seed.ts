@@ -1,6 +1,6 @@
 // 초기 샘플 데이터 (화학공학 예시). 새로고침하면 이 상태로 돌아옵니다.
 import type {
-  Comment, Course, Material, Member, Post, Publication, ResearchArea,
+  Comment, Course, Material, Member, Post, Publication, ResearchArea, UserProfile,
 } from '../../types'
 
 export const seedResearch: ResearchArea[] = [
@@ -101,4 +101,10 @@ export const seedPosts: Post[] = [
 export const seedComments: Comment[] = [
   { id: 'cm1', postId: 'post1', authorId: 'u-x1', authorName: '최박사', createdAt: '2026-10-20T10:00:00.000Z', content: 'ACS Energy Letters의 최근 리뷰를 추천합니다.' },
   { id: 'cm2', postId: 'post1', authorId: 'u-admin', authorName: '김교수', createdAt: '2026-10-20T13:20:00.000Z', content: '좋습니다. 읽고 핵심 그림 3개만 정리해서 발표해 주세요.' },
+]
+
+export const seedUsers: UserProfile[] = [
+  { id: 'u-admin', name: '김교수', email: 'prof@example.com', role: 'admin' },
+  { id: 'u-member', name: '이학생', email: 'student@example.com', role: 'member' },
+  { id: 'u-pending', name: '박신입', email: 'newbie@example.com', role: 'pending' },
 ]

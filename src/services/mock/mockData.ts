@@ -1,7 +1,7 @@
 import type { DataService } from '../types'
 import { createMemoryCollection } from './memoryCollection'
 import {
-  seedComments, seedCourses, seedMaterials, seedMembers, seedPosts, seedPublications, seedResearch,
+  seedComments, seedCourses, seedMaterials, seedMembers, seedPosts, seedPublications, seedResearch, seedUsers,
 } from './seed'
 
 export const mockDataService: DataService = {
@@ -12,4 +12,5 @@ export const mockDataService: DataService = {
   posts: createMemoryCollection('post', seedPosts),
   comments: createMemoryCollection('cm', seedComments),
   members: createMemoryCollection('mem', seedMembers),
+  users: createMemoryCollection('u', seedUsers),
 }
